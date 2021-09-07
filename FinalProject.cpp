@@ -1,5 +1,6 @@
 # include <stdio.h>
 # include <string.h>
+# include <stdlib.h>
 
 struct car {
 	char carName[200], type[100];
@@ -100,6 +101,7 @@ struct car SearchCar(struct car selection[], int l, int r, char x[200]){
 			return SearchCar(selection, mid+1, r, x);
 		}
 	}
+	return sResult;
 }
 
 void case3Menu(int *c2){
@@ -447,7 +449,7 @@ int main(){
 	header();
 	do{
 		menu();
-		
+		bool found = false;
 		scanf("%d", &choice);
 		getchar();
 		(0 <= choice && choice <= 9)? printf(""): puts("The number can only be in the range of 0 to 9");
@@ -459,16 +461,16 @@ int main(){
 			}
 			case 2:{
 				char x [200];
-				bool found;
+				struct car sResult;
 				printf("Search Car: ");
 				scanf("%[^\n]", x);
-				struct car sResult = SearchCar(selection, 0, 5, x);
+				sResult = SearchCar(selection, 0, 5, x);
 				for(int i = 0; i<6; i++){
 					if(strcmp(selection[i].carName, sResult.carName) == 0){
 						found = true;
 					}
 				}
-				if (found){
+				if (found == true){
 					puts("Found");
 					printf("Car:			%s\n", sResult.carName);
 					printf("Type:			%s\n", sResult.type);
@@ -509,6 +511,7 @@ int main(){
 				while(c != 'Y' and c != 'N'){
 					puts("Are you sure? (Y / N)");
 					scanf("%c", &c);
+					getchar();
 				}
 				if(c == 'Y'){
 					dlete();
