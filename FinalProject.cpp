@@ -1,6 +1,5 @@
 # include <stdio.h>
 # include <string.h>
-# include <stdlib.h>
 
 struct car {
 	char carName[200], type[100];
