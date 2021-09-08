@@ -27,6 +27,14 @@ void border(){
 	printf("\n\n"); 
 }
 
+int abs(int n){
+	if(n >= 0){
+		return n;
+	}
+	else
+		return (0-n);
+}
+
 void header(){
 	printf("\t\t\t"); 
 		for (int i=0; i<65; i++){
@@ -158,6 +166,7 @@ void case3Menu(int *c2){
 		&order.pickUp.d, &order.pickUp.m, &order.pickUp.y, &order.dropOff.d, &order.dropOff.m,\
 		&order.dropOff.y) != EOF){
 			for(int i=0; i<6; i++){
+				leap = false;
 				if(strcmp(selection[i].carName, order.carName) == 0){
 					price = selection[i].price;
 					if (order.pickUp.y % 4 == 0){
@@ -186,7 +195,17 @@ void case3Menu(int *c2){
 								days = (30 % order.pickUp.d + order.dropOff.d + 1);
 							}
 					}
-					(days <= 7)? price *= days: price = 0;
+					
+					(1 <= days && days <= 7)? price *= days: price = 0;
+					((abs(order.pickUp.m-order.dropOff.m) > 1 || order.pickUp.y != order.dropOff.y) && order.pickUp.m != 12)? price = 0: printf("");
+					if(order.pickUp.m == 12){
+						if(order.dropOff.m != 12 and order.dropOff.m != 1){
+							price = 0;
+						}
+					}
+					(price < 0)? price = 0: printf("");
+					(order.pickUp.d > 28 && order.pickUp.m == 2 && !leap)? price = 0: printf("");
+					(order.dropOff.d > 28 && order.dropOff.m == 2 && !leap)? price = 0: printf("");
 				}
 			}
 			printf("Name:		%s\n", order.userName);
